@@ -1,0 +1,165 @@
+/* Modern Floating Glassmorphic Navbar */
+.custom-navbar {
+  margin: 15px auto;
+  width: calc(100% - 40px);
+  max-width: 1280px;
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(190, 186, 186, 0.6) !important;
+  border-radius: 24px;
+  box-shadow: 
+    0 10px 30px -10px rgba(31, 78, 143, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.02);
+  padding: 0.75rem 1.5rem !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: sticky;
+  top: 15px;
+  z-index: 1000;
+}
+
+/* Hover shadow effect on the entire navbar */
+.custom-navbar:hover {
+  box-shadow: 
+    0 20px 40px -15px rgba(17, 146, 62, 0.08),
+    0 20px 40px -15px rgba(31, 78, 143, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.02);
+  transform: translateY(-2px);
+}
+
+/* Brand styling */
+.custom-navbar .navbar-brand {
+  transition: transform 0.3s ease;
+}
+
+.custom-navbar .navbar-brand:hover {
+  transform: scale(1.02);
+}
+
+.custom-navbar .navbar-brand .fw-bold {
+  color: #2a72d5; /* primary-dark blue */
+  letter-spacing: -0.5px;
+  font-family: fa;
+}
+
+.custom-navbar .navbar-brand span span {
+  color: #05210f; /* Accent emerald green dot */
+  text-shadow: 0 0 10px rgba(140, 146, 142, 0.3);
+}
+
+.custom-navbar .navbar-brand .text-success {
+  color: #147517 !important;
+  filter: drop-shadow(0 2px 8px rgba(17, 146, 62, 0.2));
+}
+
+/* Navigation Link Containers */
+.custom-navbar .navbar-nav {
+  align-items: center;
+}
+
+/* Navigation links */
+.custom-navbar .nav-link {
+  color: #4b5563 !important;
+  font-weight: 600;
+  font-size: 0.925rem;
+  padding: 0.6rem 1.1rem !important;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Nav link icon alignment and subtle bounce */
+.custom-navbar .nav-link i {
+  font-size: 1rem;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+/* Hover States with Pill Highlight */
+.custom-navbar .nav-link:hover {
+  color: #1f4e8f !important;
+  background: rgba(31, 78, 143, 0.06);
+}
+
+.custom-navbar .nav-link:hover i {
+  opacity: 1;
+  transform: scale(1.15) translateY(-1px);
+}
+
+/* Active Page Pill State: Gradient combining theme colors */
+.custom-navbar .nav-link.active {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #11923e 0%, #2b6cb0 100%) !important;
+  box-shadow: 
+    0 8px 20px -6px rgba(17, 146, 62, 0.35),
+    0 8px 20px -6px rgba(43, 108, 176, 0.35);
+  font-weight: 700;
+}
+
+.custom-navbar .nav-link.active i {
+  opacity: 1;
+  transform: scale(1.1);
+  color: #ffffff !important;
+}
+
+/* Premium Logout Button Styling */
+.custom-navbar .logout-btn {
+  color: #e11d48 !important; /* Premium crimson red */
+  background: rgba(225, 29, 72, 0.04) !important;
+  border: 1px solid rgba(225, 29, 72, 0.12) !important;
+  padding: 0.6rem 1.2rem !important;
+  border-radius: 16px;
+  font-weight: 600;
+}
+
+.custom-navbar .logout-btn:hover {
+  color: #ffffff !important;
+  background: #e11d48 !important;
+  border-color: #e11d48 !important;
+  box-shadow: 0 8px 20px -6px rgba(225, 29, 72, 0.4);
+  transform: translateY(-1px);
+}
+
+.custom-navbar .logout-btn:active {
+  transform: translateY(1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .custom-navbar {
+    margin: 10px;
+    width: calc(100% - 20px);
+    border-radius: 20px;
+    padding: 0.75rem 1rem !important;
+  }
+  
+  .custom-navbar .navbar-collapse {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    margin-top: 10px;
+    padding: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .custom-navbar .navbar-nav {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .custom-navbar .nav-link {
+    justify-content: flex-start;
+    padding: 0.75rem 1rem !important;
+  }
+
+  .custom-navbar .logout-btn {
+    text-align: center;
+    justify-content: center;
+    margin-left: 0 !important;
+    margin-top: 5px;
+  }
+}

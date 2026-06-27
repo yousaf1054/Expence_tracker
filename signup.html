@@ -1,162 +1,120 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LEDGER</title>
-    <link rel="icon" href="assets/image/logo.jpeg" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/login.css" />
-    <link rel="stylesheet" href="assets/fontawesome-free-7.2.0-web/fontawesome-free-7.2.0-web/css/all.min.css" />
-  </head>
-  <body>
-    <div>
-      <div
-        class="container min-vh-100 d-flex flex-column align-items-center justify-content-center"
-      >
-        <div class="login-brand text-center mb-4 mt-5">
-          <h2 class="brand-name">Ledger<span>.</span></h2>
-          <p class="brand-tag">Personal Expense Tracker</p>
-        </div>
-        <div class="row justify-content-center w-100">
-          <div class="card col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
-            <div class="card-title text-left mt-2 mb-0">
-              <h2>Create your ledger</h2>
-              <p>Start tracking your expenses in seconds.</p>
-            </div>
-            <div class="card-body">
-              <form id="login-form">
-                <div class="mb-3">
-                  <label for="email" class="form-label">Full name</label>
-                  <div class="input-group">
-                    <span class="input-group-text"
-                      ><i class="fa fa-user"></i
-                    ></span>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="fullname"
-                      required
-                      placeholder="Enter your full name"
-                    />
-                  </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LEDGER</title>
+  <link rel="icon" href="assets/image/logo.jpeg" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/login.css" />
+  <link rel="stylesheet" href="assets/fontawesome-free-7.2.0-web/fontawesome-free-7.2.0-web/css/all.min.css" />
+</head>
+
+<body>
+  <div>
+    <div class="container min-vh-100 d-flex flex-column align-items-center justify-content-center">
+      <div class="login-brand text-center mb-4 mt-5">
+        <h2 class="brand-name">Ledger<span>.</span></h2>
+        <p class="brand-tag">Personal Expense Tracker</p>
+      </div>
+      <div class="row justify-content-center w-100">
+        <div class="card col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
+          <div class="card-title text-left mt-2 mb-0">
+            <h2>Create your ledger</h2>
+            <p>Start tracking your expenses in seconds.</p>
+          </div>
+          <div class="card-body">
+            <form id="login-form">
+              <div class="mb-3">
+                <label for="email" class="form-label">Full name</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                  <input type="text" class="form-control" id="fullname" required placeholder="Enter your full name" />
                 </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
-                  <div class="input-group">
-                    <span class="input-group-text"
-                      ><i class="fa fa-envelope"></i
-                    ></span>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="form-email"
-                      required
-                      placeholder="Enter your email"
-                    />
-                  </div>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                  <input type="email" class="form-control" id="email" required placeholder="Enter your email" />
                 </div>
-                <div class="mb-3">
-                  <label for="password" class="form-label">Password</label>
-                  <div class="input-group">
-                    <span class="input-group-text"
-                      ><i class="fa fa-lock"></i
-                    ></span>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="form-password"
-                      placeholder="Enter your password"
-                      required
-                    />
-                  </div>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                  <input type="password" class="form-control" id="password" placeholder="Enter your password"
+                    required />
                 </div>
-                <div class="mb-3">
-                  <label for="confirm-password" class="form-label"
-                    >Confirm Password</label
-                  >
-                  <div class="input-group">
-                    <span class="input-group-text"
-                      ><i class="fa fa-lock"></i
-                    ></span>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="form-confirm-password"
-                      placeholder="Confirm your password"
-                      required
-                    />
-                  </div>
+              </div>
+              <div class="mb-3">
+                <label for="confirm-password" class="form-label">Confirm Password</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                  <input type="password" class="form-control" id="confirm_password" placeholder="Confirm your password"
+                    required />
                 </div>
-                <div class="mb-3">
-                  <label for="account-type" class="form-label"
-                    >Account Type</label
-                  >
-                  <div class="input-group">
-                    <select id="account-type" class="form-select">
-                      <option value="" disabled selected>
-                        Select account type
-                      </option>
-                      <option value="personal">Personal</option>
-                      <option value="business">Business</option>
-                    </select>
-                  </div>
+              </div>
+              <div class="mb-3">
+                <label for="account-type" class="form-label">Account Type</label>
+                <div class="input-group">
+                  <select id="account-type" class="form-select">
+                    <option value="" disabled selected>
+                      Select account type
+                    </option>
+                    <option value="personal">Personal</option>
+                    <option value="business">Business</option>
+                  </select>
                 </div>
-                <div class="mb-3">
-                  <label for="account-number" class="form-label"
-                    >Account Number</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="account-number"
-                      placeholder="Enter your account number"
-                      required
-                    />
-                  </div>
+              </div>
+              <div class="mb-3">
+                <label for="account-number" class="form-label">Account Number</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="account-number" placeholder="Enter your account number"
+                    required />
                 </div>
-                <div class="mb-3">
-                  <label for="account-number" class="form-label">Balance</label>
-                  <div class="input-group">
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="account-balance"
-                      placeholder="Enter your current account balance"
-                      required
-                    />
-                  </div>
+              </div>
+              <div class="mb-3">
+                <label for="account-number" class="form-label">Balance</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="account-balance"
+                    placeholder="Enter your current account balance" required />
                 </div>
-                <div class="row d-flex justify-content-center mt-4">
-                  <button type="button" class="btn btn-success col-12">
-                    <i class="fa fa-user-plus"></i> Create Account
-                  </button>
-                </div>
-              </form>
-              <div class="text-center d-flex justify-content-center gap-2 mt-3">
-                <div class="divider text-center mt-1">
-                  <span>Already have an account?</span>
+              </div>
+              <div class="row d-flex justify-content-center mt-4">
+                <button type="button" id="create-acc" class="btn btn-success col-12">
+                  <i class="fa fa-user-plus"></i> Create Account
+                </button>
+              </div>
+            </form>
+            <div class="text-center d-flex justify-content-center gap-2 mt-3">
+              <div class="divider text-center mt-1">
+                <span>Already have an account?</span>
                 <span class="text-muted small"></span>
-                <a href="index.html" class="toggle-link" id="showSignup"
-                  >Sign in</a
-                >
+                <a href="index.html" class="toggle-link" id="showSignup">Sign in</a>
               </div>
             </div>
           </div>
         </div>
         <div class="text-center mt-5 mb-5">
-          <span class="text-muted small"
-              >By creating an account, you agree to our</span
-            >
-            <a href="#" class="toggle-link">Terms of Service</a>
-          </div>
+          <span class="text-muted small">By creating an account, you agree to our</span>
+          <a href="#" class="toggle-link">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100">
+      <div id="loginToast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body" id="toastMessage"></div>
+        </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+    <script src="js\auth.js"></script>
+  </div>
+</body>
+
 </html>
