@@ -106,4 +106,20 @@ a {
     background-color: #11923e;
     border-color: #11923e;
 }
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+#loginToast.showing,
+#loginToast.show {
+  animation: slideInFromRight 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
 

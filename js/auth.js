@@ -21,8 +21,9 @@ function adduser() {
   let account_type = document.getElementById("account-type").value;
   let account_number = document.getElementById("account-number").value;
   let balance = document.getElementById("account-balance").value;
-  let toastEl = document.getElementById('loginToast');
-  let toastMessage = document.getElementById('toastMessage');
+  let country = document.getElementById("country").value;
+  let toastEl = document.getElementById("loginToast");
+  let toastMessage = document.getElementById("toastMessage");
   let users = JSON.parse(localStorage.getItem("users")) || [];
   let user = {
     firstname: firstname,
@@ -31,10 +32,11 @@ function adduser() {
     account_type: account_type,
     account_number: account_number,
     balance: balance,
+    country: country,
   };
   if (email.trim() === "" || password.trim() === "") {
     toastEl.style.borderLeft = "4px solid #ff0000";
-    toastEl.style.backgroundColor = "transparent";
+    toastEl.style.backgroundColor = "white";
     toastMessage.textContent = "invalid credential";
     let toast = new bootstrap.Toast(toastEl);
     toast.show();
@@ -42,7 +44,7 @@ function adduser() {
   }
   if (confirm_password !== password) {
     toastEl.style.borderLeft = "4px solid #ff0000";
-    toastEl.style.backgroundColor = "transparent";
+    toastEl.style.backgroundColor = "white";
     toastMessage.textContent = "confirm password does not match";
     let toast = new bootstrap.Toast(toastEl);
     toast.show();
@@ -50,7 +52,7 @@ function adduser() {
   }
   if (users.find((el) => el.email === email)) {
     toastEl.style.borderLeft = "4px solid #ff0000";
-    toastEl.style.backgroundColor = "transparent";
+    toastEl.style.backgroundColor = "white";
     toastMessage.textContent = "email already exists";
     let toast = new bootstrap.Toast(toastEl);
     toast.show();
@@ -59,13 +61,13 @@ function adduser() {
   users.push(user);
   localStorage.setItem("users", JSON.stringify(users));
   toastEl.style.borderLeft = "4px solid #11923e";
-  toastEl.style.backgroundColor = "transparent";
+  toastEl.style.backgroundColor = "white";
   toastMessage.textContent = "User created successfully!";
   let toast = new bootstrap.Toast(toastEl);
   toast.show();
   setTimeout(() => {
     window.location.href = "index.html";
-  }, 1500);
+  }, 2000);
 }
 //login
 
@@ -75,13 +77,14 @@ function enter() {
   let users = JSON.parse(localStorage.getItem("users")) || [];
 
   let user = users.find((el) => el.email === email && el.password === password);
-
-  let toastEl = document.getElementById('loginToast');
-  let toastMessage = document.getElementById('toastMessage');
+  let currentuser = user;
+  localStorage.setItem("currentuser", JSON.stringify(currentuser));
+  let toastEl = document.getElementById("loginToast");
+  let toastMessage = document.getElementById("toastMessage");
 
   if (user) {
     toastEl.style.borderLeft = "4px solid #11923e";
-    toastEl.style.backgroundColor = "transparent";
+    toastEl.style.backgroundColor = "white";
     toastMessage.textContent = "Login successful!";
     let toast = new bootstrap.Toast(toastEl);
     toast.show();
@@ -89,10 +92,10 @@ function enter() {
     // Redirect to dashboard/expense view page after a short delay
     setTimeout(() => {
       window.location.href = "home.html";
-    }, 1500);
+    }, 2000);
   } else {
     toastEl.style.borderLeft = "4px solid #ff0000";
-    toastEl.style.backgroundColor = "transparent";
+    toastEl.style.backgroundColor = "white";
     toastMessage.textContent = "invalid credential";
     let toast = new bootstrap.Toast(toastEl);
     toast.show();

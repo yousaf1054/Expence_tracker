@@ -93,10 +93,10 @@
 /* Active Page Pill State: Gradient combining theme colors */
 .custom-navbar .nav-link.active {
   color: #ffffff !important;
-  background: linear-gradient(135deg, #11923e 0%, #2b6cb0 100%) !important;
+  background: linear-gradient(135deg, #30dd6d 0%, #195ea7 100%) !important;
   box-shadow: 
-    0 8px 20px -6px rgba(17, 146, 62, 0.35),
-    0 8px 20px -6px rgba(43, 108, 176, 0.35);
+    0 8px 20px -6px rgba(115, 138, 123, 0.35),
+    0 8px 20px -6px rgba(58, 71, 86, 0.35);
   font-weight: 700;
 }
 

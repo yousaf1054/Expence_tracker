@@ -1,32 +1,13 @@
-:root {
-  --primary: #2b6cb0;
-  --primary-dark: #1f4e8f;
-  --surface: #ffffff;
-  --surface-soft: #f5f8fd;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --border: rgba(148, 163, 184, 0.24);
-  --shadow: 0 24px 80px rgba(45, 55, 72, 0.12);
-}
 
-html,
-body {
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(68, 96, 142, 0.18),
-      transparent 208%
-    ),
-    linear-gradient(180deg, #eef4fb 0%, #f9fbff 100%);
-  color: var(--text);
+#balance{
+ border-left: #108927 6px solid;
+}
+#spent{
+  border-left: #c1432b 6px solid;
+}
+#month{
+  border-left: #c98a2c 6px solid;
+}
+#category{
+ border-left: #1b2430 6px solid;
 }
