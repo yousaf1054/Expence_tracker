@@ -43,7 +43,7 @@ async function loginUser(e) {
 
   setTimeout(() => {
     window.location.href = "../home.html";
-  }, 2000);
+  }, 1000);
 }
 
 //toast for error

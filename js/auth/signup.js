@@ -98,7 +98,7 @@ async function adduser(e) {
 
   setTimeout(() => {
     window.location.href = "../index.html";
-  }, 2000);
+  }, 1000);
 }
 
 // function for the toast
