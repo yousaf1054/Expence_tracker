@@ -22,8 +22,14 @@
 
   <body>
     <div id="navbar-container"></div>
-    <div id="toast"></div>
     <div id="logout-modal"></div>
+        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100">
+      <div id="loginToast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body" id="toastMessage"></div>
+        </div>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config/supabase.js"></script>
     <script src="js\auth\authguard.js"></script>
