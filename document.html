@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/fontawesome-free-7.2.0-web/fontawesome-free-7.2.0-web/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="modal"></div>
+    <div class="container" id="document-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config/supabase.js"></script>
+    <script src="js\auth\authguard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="js\componets\load_navebar.js"></script>
+    <script src="js/componets/load-modal.js"></script>
+    <script src="js/auth/logout.js"></script>
+    <script>
+      let toastEl = document.getElementById("loginToast");
+      let toastMessage = document.getElementById("toastMessage");
+
+      async function loadExpense() {
+        try {
+          // Get expense id from localStorage
+          const expenseId = localStorage.getItem("expenseId");
+
+          if (!expenseId) {
+            showToast("Expense not found.", false);
+            return;
+          }
+
+          // Get logged in user
+          const { data: authData, error: authError } =
+            await supabaseClient.auth.getUser();
+
+          if (authError) {
+            showToast(authError.message, false);
+            return;
+          }
+
+          // Fetch only one expense
+          const { data: expense, error } = await supabaseClient
+            .from("expenses")
+            .select("*")
+            .eq("id", expenseId)
+            .eq("auth_id", authData.user.id)
+            .single();
+
+          if (error) {
+            showToast(error.message, false);
+            return;
+          }
+
+          displayExpense(expense);
+        } catch (error) {
+          showToast(error.message, false);
+        }
+      }
+
+      loadExpense();
+
+      function displayExpense(expense) {
+        let container = document.getElementById("document-container");
+        let set = expense.transaction_type === "Credit" ? "success" : "danger";
+        container.innerHTML = `
+    <div class="card shadow m-5  w-75 mx-auto justify-content-center">
+
+      <div class="card-header bg-${set} text-white">
+        <h4 class="mb-0">Expense Details</h4>
+      </div>
+
+      <div class="card-body">
+
+        <table class="table table-bordered">
+
+          <tr>
+            <th style="width:30%">Title</th>
+            <td>${expense.title}</td>
+          </tr>
+
+          <tr>
+            <th>Amount</th>
+            <td class="text-${set}">₹${expense.amount}</td>
+          </tr>
+
+          <tr>
+            <th>Transaction Type</th>
+            <td>${expense.transaction_type}</td>
+          </tr>
+
+          <tr>
+            <th>Category</th>
+            <td>${expense.category}</td>
+          </tr>
+
+          <tr>
+            <th>Payment Method</th>
+            <td>${expense.payment_methode}</td>
+          </tr>
+
+          <tr>
+            <th>Notes</th>
+            <td>${expense.notes || "-"}</td>
+          </tr>
+
+          <tr>
+            <th>Date and Time</th>
+            <td>${new Date(expense.created_at).toLocaleString()}</td>
+          </tr>
+
+        </table>
+
+      </div>
+
+    </div>
+    <div class="text-center">
+      <button class="btn btn-secondary" onclick="back()">Back</button>
+    </div>
+  `;
+      }
+      function back() {
+        window.location.href = "view-expense.html";
+      }
+
+      function showToast(message, type) {
+        if (type === false) {
+          toastEl.style.borderLeft = "4px solid red";
+          toastEl.style.color = "red";
+          toastEl.style.background = "white";
+        } else {
+          toastEl.style.borderLeft = "4px solid green";
+          toastEl.style.color = "green";
+          toastEl.style.background = "white";
+        }
+
+        toastMessage.textContent = message;
+
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      }
+    </script>
+  </body>
+</html>

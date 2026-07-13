@@ -18,11 +18,212 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/navbar.css" />
+    <style>
+      /* ===========================
+   Transaction Type Radio Button
+=========================== */
+      /* Default */
+      /* Default radio button */
+      .form-check-input {
+        cursor: pointer;
+        background-color: #fff;
+        border: 2px solid #ced4da;
+      }
+
+      /* Credit selected */
+      .credit-active {
+        background-color: #198754 !important;
+        border-color: #198754 !important;
+      }
+
+      /* Debit selected */
+      .debit-active {
+        background-color: #dc3545 !important;
+        border-color: #dc3545 !important;
+      }
+
+      /* Focus effect */
+      .form-check-input:focus {
+        box-shadow: none;
+      }
+    </style>
   </head>
 
   <body>
+    <!-- Navbar -->
     <div id="navbar-container"></div>
+
+    <!-- Logout Modal -->
     <div id="logout-modal"></div>
+
+    <!-- ===========================
+     Main Content
+=========================== -->
+    <div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <!-- Expense Form Card -->
+          <div class="card shadow">
+            <!-- Card Header -->
+            <div
+              class="card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap"
+            >
+              <h2 class="mb-0">Add Transaction</h2>
+
+              <!-- Transaction Type -->
+              <div
+                id="transaction-type"
+                class="d-flex align-items-center gap-3"
+              >
+                <div class="form-check form-check-inline mb-0">
+                  <input
+                    class="form-check-input credit-active"
+                    type="radio"
+                    name="transactionType"
+                    id="credit"
+                    value="Credit"
+                  />
+
+                  <label class="form-check-label text-white" for="credit">
+                    Credit
+                  </label>
+                </div>
+
+                <div class="form-check form-check-inline mb-0">
+                  <input
+                    class="form-check-input debit-active"
+                    type="radio"
+                    name="transactionType"
+                    id="debit"
+                    value="Debit"
+                  />
+
+                  <label class="form-check-label text-white" for="debit">
+                    Debit
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+              <!-- Expense Form -->
+              <form id="add">
+                <div class="row g-3">
+                  <!-- ===========================
+                   Expense Title
+              ============================ -->
+                  <div class="col-md-6">
+                    <label for="title" class="form-label">
+                      Expense Title
+                    </label>
+
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
+                      class="form-control"
+                      placeholder="Enter expense title"
+                    />
+                  </div>
+
+                  <!-- ===========================
+                   Expense Category
+              ============================ -->
+                  <div class="col-md-6">
+                    <label class="form-label"> Category </label>
+                    <input
+                      type="text"
+                      id="select-category"
+                      class="form-control"
+                      placeholder="Enter the catogery"
+                    />
+                  </div>
+
+                  <!-- ===========================
+                   Expense Amount
+              ============================ -->
+                  <div class="col-md-6">
+                    <label for="amount" class="form-label"> Amount </label>
+
+                    <input
+                      type="text"
+                      id="amount"
+                      name="amount"
+                      class="form-control"
+                      placeholder="Enter amount"
+                      min="1"
+                    />
+                  </div>
+
+                  <!-- ===========================
+                   Expense Date
+              ============================ -->
+                  <div class="col-md-6">
+                    <label for="date" class="form-label"> Date </label>
+
+                    <input
+                      type="date"
+                      id="date"
+                      name="date"
+                      class="form-control"
+                    />
+                  </div>
+
+                  <!-- ===========================
+                   Payment Method
+              ============================ -->
+                  <div class="col-md-6">
+                    <label for="method" class="form-label">
+                      Payment Method
+                    </label>
+
+                    <select id="method" name="method" class="form-select">
+                      <option value="">Choose Payment Method</option>
+                      <option value="Cash">Cash</option>
+                      <option value="UPI">UPI</option>
+                      <option value="Card">Card</option>
+                      <option value="account">Account</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <!-- ===========================
+                   Notes
+              ============================ -->
+                  <div class="col-md-6">
+                    <label for="notes" class="form-label"> Notes </label>
+
+                    <textarea
+                      id="notes"
+                      name="notes"
+                      class="form-control"
+                      rows="3"
+                      placeholder="Enter any additional notes (optional)"
+                    ></textarea>
+                  </div>
+
+                  <!-- ===========================
+                   Submit Button
+              ============================ -->
+                  <div class="col-12 d-flex flex-column flex-md-row gap-2">
+                    <button type="submit" class="btn btn-primary flex-grow-1">
+                      <i class="fa-solid fa-plus me-2"></i>
+                      Expense
+                    </button>
+                    <a href="view-expense.html" class="btn btn-outline-secondary flex-grow-1">
+                      <i class="fa-solid fa-eye me-2"></i>Expense
+                    </a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
     <div
       class="toast-container position-fixed top-0 end-0 p-3"
       style="z-index: 1100"
@@ -39,10 +240,12 @@
         </div>
       </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config/supabase.js"></script>
     <script src="js\auth\authguard.js"></script>
     <script src="js\componets\load_navebar.js"></script>
+    <script src="js\add-expense.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/componets/load-modal.js"></script>
     <script src="js/auth/logout.js"></script>

@@ -74,7 +74,7 @@ async function adduser(e) {
   }
 
   //insert the user data into the database
-  const { data: userData, error: insertError } = await supabaseClient
+  const { error: insertError } = await supabaseClient
     .from("users")
     .insert([
       {
@@ -89,7 +89,6 @@ async function adduser(e) {
     ]);
 
   if (insertError) {
-    console.log(insertError);
     showtoastError(insertError.message);
     return;
   }
