@@ -24,7 +24,6 @@ async function loadAll() {
       showToast(expenseError.message, false);
       return;
     }
-    console.log(expenseData);
 
     let { data: userData, error: userError } = await supabaseClient
       .from("users")
@@ -87,6 +86,14 @@ async function loadAll() {
     html = `<h3>${topCategory}</h3>`;
     category.innerHTML = html;
     category.style = "color:#1b2430;; font-weight:bold;";
+
+    if (!expenseData || expenseData.length === 0) {
+      showEmptyAnalysisState();
+      showToast("Data loaded successfully!", true);
+      return;
+    }
+
+    showAnalysisGrid();
     createWeeklyChart(expenseData);
     createMonthlyChart(expenseData);
     createYearlyChart(expenseData);
@@ -97,6 +104,32 @@ async function loadAll() {
   }
 }
 loadAll();
+
+function showEmptyAnalysisState() {
+  const emptyState = document.getElementById("analysis-empty-state");
+  const analysisGrid = document.getElementById("analysis-grid");
+
+  if (analysisGrid) {
+    analysisGrid.classList.add("d-none");
+  }
+
+  if (emptyState) {
+    emptyState.classList.remove("d-none");
+  }
+}
+
+function showAnalysisGrid() {
+  const emptyState = document.getElementById("analysis-empty-state");
+  const analysisGrid = document.getElementById("analysis-grid");
+
+  if (emptyState) {
+    emptyState.classList.add("d-none");
+  }
+
+  if (analysisGrid) {
+    analysisGrid.classList.remove("d-none");
+  }
+}
 function showToast(message, type) {
   if (type === false) {
     toastEl.style.borderLeft = "4px solid red";

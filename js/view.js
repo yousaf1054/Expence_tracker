@@ -259,6 +259,7 @@ async function confirmDelete(id) {
       .eq("id", id);
     if (deleteError) {
       showToast(deleteError.message, false);
+      return;
     }
     showToast("Successfully deleted the transaction", true);
     loadExpenseHistory();
