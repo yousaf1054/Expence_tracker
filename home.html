@@ -110,38 +110,29 @@
         </div>
       </div>
       <div id="logout-modal"></div>
-      <div>
-        <div class="card container mt-5">
+      <div class="container mt-5 analysis-section">
+        <div class="card analysis-shell">
           <h1 class="text-center mt-5 text-primary">Expense Analysis</h1>
           <div id="analysis-empty-state" class="d-none px-4 py-5 text-center">
             <div
-              class="d-flex flex-column align-items-center justify-content-center gap-3"
-              style="min-height: 320px"
+              class="d-flex flex-column align-items-center justify-content-center gap-3 analysis-empty"
             >
               <i class="fa-solid fa-box-open text-muted fs-1"></i>
               <h4 class="text-muted">No Records Found</h4>
             </div>
           </div>
-          <div id="analysis-grid">
-            <div
-              class="container d-flex justify-content-center align-items-center gap-5 mt-2"
-            >
-              <div class="card p-3 m-5 w-50 mx-auto" height="300">
-                <canvas id="weeklyChart"></canvas>
-              </div>
-              <div class="card p-3 m-5 w-50 mx-auto" height="300">
-                <canvas id="monthlyChart"></canvas>
-              </div>
+          <div id="analysis-grid" class="analysis-grid">
+            <div class="card analysis-card p-3" height="300">
+              <canvas id="weeklyChart"></canvas>
             </div>
-            <div
-              class="container d-flex justify-content-center align-items-center gap-5"
-            >
-              <div class="card p-3 m-5 w-50 mx-auto" height="300">
-                <canvas id="yearlyChart"></canvas>
-              </div>
-              <div class="card p-3 m-5 w-50 mx-auto">
-                <canvas id="categoryChart" height="300"></canvas>
-              </div>
+            <div class="card analysis-card p-3" height="300">
+              <canvas id="monthlyChart"></canvas>
+            </div>
+            <div class="card analysis-card p-3" height="300">
+              <canvas id="yearlyChart"></canvas>
+            </div>
+            <div class="card analysis-card p-3">
+              <canvas id="categoryChart" height="300"></canvas>
             </div>
           </div>
         </div>
