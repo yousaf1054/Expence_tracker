@@ -42,7 +42,7 @@ async function loginUser(e) {
   showToastSuccess("login successfuly");
 
   setTimeout(() => {
-    window.location.href = "../home.html";
+    window.location.href = "home.html";
   }, 1000);
 }
 

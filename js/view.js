@@ -9,8 +9,9 @@ let currentPageNo = 1;
 let itemPerPage = 5;
 let totalPage = 0;
 let visiblePages = 3;
-let page = [];
-let expenseData = [];
+let allExpenseData = [];
+let displayedData = [];
+let activeFilter = "all";
 
 async function loadExpenseHistory() {
   try {
@@ -27,55 +28,163 @@ async function loadExpenseHistory() {
       showToast(userError.message, false);
       return;
     }
-    tableCreation(userData);
+    allExpenseData = sortByCreatedAt(userData || []);
+    bindFilterButtons();
+    applyFiltersAndRender();
   } catch (error) {
     showToast(error.message, false);
   }
 }
 loadExpenseHistory();
 
+function sortByCreatedAt(data) {
+  return [...data].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+}
+
+function bindFilterButtons() {
+  const buttons = document.querySelectorAll(".expense-filter-btn");
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      activeFilter = button.dataset.filter || "all";
+      currentPageNo = 1;
+      updateFilterButtonState();
+      applyFiltersAndRender();
+    });
+  });
+  updateFilterButtonState();
+}
+
+function updateFilterButtonState() {
+  const buttons = document.querySelectorAll(".expense-filter-btn");
+  buttons.forEach((button) => {
+    const isActive = button.dataset.filter === activeFilter;
+    button.classList.toggle("btn-primary", isActive);
+    button.classList.toggle("btn-outline-primary", !isActive);
+  });
+}
+
+function getExpenseDate(expense) {
+  if (expense.expense_date) {
+    const date = new Date(expense.expense_date);
+    if (!Number.isNaN(date.getTime())) {
+      return date;
+    }
+  }
+
+  if (expense.created_at) {
+    const date = new Date(expense.created_at);
+    if (!Number.isNaN(date.getTime())) {
+      return date;
+    }
+  }
+
+  return null;
+}
+
+function filterBySelectedRange(data) {
+  if (activeFilter === "all") {
+    return [...data];
+  }
+
+  const now = new Date();
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+
+  let rangeStart = todayStart;
+
+  if (activeFilter === "day") {
+    rangeStart = todayStart;
+  } else if (activeFilter === "week") {
+    const dayIndex = (now.getDay() + 6) % 7;
+    rangeStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayIndex);
+    rangeStart.setHours(0, 0, 0, 0);
+  } else if (activeFilter === "month") {
+    rangeStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  } else if (activeFilter === "year") {
+    rangeStart = new Date(now.getFullYear(), 0, 1);
+  }
+
+  return data.filter((expense) => {
+    const expenseDate = getExpenseDate(expense);
+    return expenseDate && expenseDate >= rangeStart && expenseDate <= todayEnd;
+  });
+}
+
+function applyFiltersAndRender() {
+  const keyword = search.value.trim().toLowerCase();
+  let filtered = filterBySelectedRange(allExpenseData);
+
+  if (keyword) {
+    filtered = filtered.filter((expense) => {
+      return (
+        expense.title.toLowerCase().includes(keyword) ||
+        expense.transaction_type.toLowerCase().includes(keyword) ||
+        expense.amount.toString().includes(keyword) ||
+        expense.expense_date.includes(keyword) ||
+        expense.category.toLowerCase().includes(keyword)
+      );
+    });
+  }
+
+  displayedData = sortByCreatedAt(filtered);
+  totalPage = Math.ceil(displayedData.length / itemPerPage);
+
+  if (currentPageNo > totalPage && totalPage > 0) {
+    currentPageNo = totalPage;
+  }
+
+  tableCreation(displayedData);
+}
+
 function tableCreation(data) {
   if (data.length === 0) {
-    showToast("No record found", false);
+    const body = document.getElementById("body");
+    body.innerHTML = `
+      <div class="d-flex flex-column align-items-center justify-content-center gap-3" style="height: 300px">
+        <i class="fa-solid fa-box-open text-muted fs-1"></i>
+        <h4 class="text-muted">No Records Found</h4>
+      </div>
+    `;
+    const pageIcon = document.getElementById("pagination");
+    pageIcon.innerHTML = "";
+    return;
   } else {
     totalPage = Math.ceil(data.length / itemPerPage);
-    let sortedData = data.sort(
-      (a, b) => new Date(b.created_at) - new Date(a.created_at),
-    );
-    expenseData = sortedData;
-    let pageData = pagination(sortedData);
+    const pageData = pagination(data);
 
-    let body = document.getElementById("body");
-    let html = `
-<table class="table table-bordered" style="border: 1px solid #dee2e6; border-radius: 5px; overflow: hidden; border-collapse: collapse; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-    <thead>
+    const body = document.getElementById("body");
+    const html = `
+  <div class="table-responsive expense-table-wrap">
+    <table class="table table-bordered" style="border: 1px solid #dee2e6; border-radius: 5px; overflow: hidden; border-collapse: collapse; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); min-width: 680px;">
+      <thead>
         <tr>
-            <th style="width:5%; text-align:center;">SI</th>
-            <th style="width:20%; text-align:center;">Date</th>
-            <th style="width:40%; text-align:left;">Title</th>
-            <th style="width:20%; text-align:right;">Amount</th>
-            <th style="width:15%; text-align:center;">Action</th>
+          <th style="width:5%; text-align:center;">SI</th>
+          <th style="width:20%; text-align:center;">Date</th>
+          <th style="width:40%; text-align:left;">Title</th>
+          <th style="width:20%; text-align:right;">Amount</th>
+          <th style="width:15%; text-align:center;">Action</th>
         </tr>
-    </thead>
-    <tbody id="expense-body">
-    </tbody>
-</table>
-`;
+      </thead>
+      <tbody id="expense-body">
+      </tbody>
+    </table>
+  </div>
+  `;
     body.innerHTML = html;
-    let tbody = document.getElementById("expense-body");
+    const tbody = document.getElementById("expense-body");
     let count = (currentPageNo - 1) * itemPerPage + 1;
     pageData.forEach((el) => {
-      let tr = document.createElement("tr");
-      let set = el.transaction_type === "Credit" ? "green" : "red";
-      let html = `<td style="text-align:center; color:${set}">${count}</td>
+      const tr = document.createElement("tr");
+      const set = el.transaction_type === "Credit" ? "green" : "red";
+      const rowHtml = `<td style="text-align:center; color:${set}">${count}</td>
       <td style="text-align:center; color:${set}">${el.expense_date.split("-").reverse().join("-")}</td>
       <td style="color:${set}">${el.title.charAt(0).toUpperCase() + el.title.slice(1)}</td>
       <td style="text-align:right; color:${set}">₹${el.amount}</td>
-      <td style="text-align:center; gap: 5px;">
+      <td class="expense-action-cell" style="text-align:center; gap: 5px;">
         <button class="btn btn-outline-primary btn-sm" onclick="viewExpense('${el.id}')"><span><i class="fa fa-eye"></i></span></button> <button class="btn btn-outline-danger btn-sm" onclick="deleteExpense('${el.id}', '${el.title}')"><span><i class="fa fa-trash"></i></span></button>
       </td>
     `;
-      tr.innerHTML = html;
+      tr.innerHTML = rowHtml;
       tbody.appendChild(tr);
       count++;
     });
@@ -162,7 +271,6 @@ function pagination(data) {
   let start = (currentPageNo - 1) * itemPerPage;
   let end = start + itemPerPage;
   let page = data.slice(start, end);
-  console.log("page", page);
   renderPagination();
   return page;
 }
@@ -194,7 +302,7 @@ function renderPagination() {
   previousButton.addEventListener("click", function () {
     if (currentPageNo > 1) {
       currentPageNo--;
-      tableCreation(expenseData);
+      tableCreation(displayedData);
     }
   });
 
@@ -216,7 +324,7 @@ function renderPagination() {
 
     button.addEventListener("click", function () {
       currentPageNo = i;
-      tableCreation(expenseData);
+      tableCreation(displayedData);
     });
 
     li.appendChild(button);
@@ -238,7 +346,7 @@ function renderPagination() {
   nextButton.addEventListener("click", function () {
     if (currentPageNo < totalPage) {
       currentPageNo++;
-      tableCreation(expenseData);
+      tableCreation(displayedData);
     }
   });
 
@@ -247,24 +355,6 @@ function renderPagination() {
 }
 
 function searchExpense() {
-  let keyword = search.value.trim().toLowerCase();
-
   currentPageNo = 1;
-
-  if (keyword === "") {
-    tableCreation(expenseData);
-    return;
-  }
-
-  let filteredData = expenseData.filter((expense) => {
-    return (
-      expense.title.toLowerCase().includes(keyword) ||
-      expense.transaction_type.toLowerCase().includes(keyword) ||
-      expense.amount.toString().includes(keyword) ||
-      expense.expense_date.includes(keyword) ||
-      expense.category.includes(keyword)
-    );
-  });
-
-  tableCreation(filteredData);
+  applyFiltersAndRender();
 }
