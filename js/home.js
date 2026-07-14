@@ -452,7 +452,7 @@ function createCategoryChart(data) {
 
   data.forEach((el) => {
     // Only count expenses
-    if (el.transaction_type !== "Debit") return;
+    
 
     if (categoryTotal[el.category]) {
       categoryTotal[el.category] += el.amount;
